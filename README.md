@@ -18,6 +18,6 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Vision Statement](../../wiki/Vision%20Statement)
 - [Requirements](../../wiki/Requirements)
 - [Project Development Plan](../../wiki/Project-Development-Plan)
-- [Iteration 1 Plan](../../wiki/Iteration-1-Plan)
+- [Iteration 1 Plan](../../wiki/Iteration-1-Plan) and [Board](https://github.com/users/oaoak/projects/1/views/1?layout=board)
 
 More about [Django](https://www.w3schools.com/django/)
