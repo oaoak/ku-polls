@@ -19,5 +19,6 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Requirements](../../wiki/Requirements)
 - [Project Development Plan](../../wiki/Project-Development-Plan)
 - [Iteration 1 Plan](../../wiki/Iteration-1-Plan) and [Board](https://github.com/users/oaoak/projects/1/views/1?layout=board)
+- [Iteration 2 Plan](../../wiki/Iteration-2-Plan) and [Board](https://github.com/users/oaoak/projects/1/views/7)
 
 More about [Django](https://www.w3schools.com/django/)
