@@ -1,6 +1,176 @@
-li a {
-    color: ghostwhite;
-}
 body {
-    background: white url("images/background.png") no-repeat;
+    background: white url("images/plant-background.png") no-repeat;
+    background-size: cover;
+}
+.headbox {
+    background-color: darkgreen;
+    padding: 10px;
+    display: block;
+    opacity: 0.8;
+}
+.headbox h1 {
+    color: ghostwhite;
+    filter: drop-shadow(0px 4px 4px rgba(0.5,0.5,0.5,0.5));
+    text-align: center;
+    font-family: Optima, sans-serif;
+    font-size: 84px;
+    opacity: 1;
+}
+.questionbutton {
+    border: medium;
+    color: white;
+    background-color: #b37a4c;
+    font-family: Palatino, URW Palladio L, serif;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 6px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.questionbutton:hover {
+    background-color: #f1d3b2;
+    color: black;
+    border-color: #f2f2f2;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.resultbutton {
+    border: medium;
+    color: white;
+    background-color: darkgreen;
+    font-family: Palatino, URW Palladio L, serif;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 6px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.resultbutton:hover {
+    background-color: mediumseagreen;
+    color: #f2f2f2;
+    border-color: #f2f2f2;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.resultbutton:active {
+    transform: translateY(4px);
+}
+.votebutton {
+    color: white;
+    background-color: black;
+    border-color: white;
+    border-radius: 15px;
+    font-family: Palatino, URW Palladio L, serif;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    margin: 6px 2px;
+    transition-duration: 0.4s;
+  cursor: pointer;
+}
+.votebutton:hover {
+    background-color: mediumseagreen;
+    color: #f2f2f2;
+    border-color: #f2f2f2;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.votebutton:active {
+    transform: translateY(4px);
+}
+h3 {
+    color: darkgreen;
+    text-align: center;
+    font-family: Palatino, urw, sans-serif;
+    font-size: 50px;
+    opacity: 1;
+}
+h4 {
+    color: darkgreen;
+    text-align: left;
+    font-family: Palatino, urw, sans-serif;
+    font-size: 50px;
+    opacity: 1;
+}
+#choices {
+    font-family: Optima, sans-serif;
+    border-collapse: collapse;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+#choices td, #choices th {
+    border: 1px solid #818589;
+    padding: 8px;
+    font-size: 20px;
+    text-align: center;
+}
+#choices tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+#choices th {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+    background-color: darkgreen;
+    color: white;
+}
+#button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+}
+button#home-button {
+    border: none;
+    background-color: darkgreen;
+    color: white;
+    white-space: nowrap;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.4s;
+    font-size: 20px;
+    font-family: Optima, sans-serif;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+button#home-button:hover {
+    background-color: mediumseagreen;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.detailchoices {
+    font-family: Optima, sans-serif;
+    font-size: 30px;
+}
+.custom-radio {
+    display: none; /* Hide the default radio button */
+}
+
+/* Style for custom radio button container */
+.custom-radio-label {
+    position: relative;
+    cursor: pointer;
+    padding-left: 35px; /* Adjust the size of the custom radio button */
+    margin-right: 15px; /* Adjust spacing between options */
+}
+
+/* Style for the custom radio button indicator */
+.custom-radio-label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; /* Size of the custom radio button */
+    height: 20px; /* Size of the custom radio button */
+    border: 2px solid #333; /* Border color of the custom radio button */
+    border-radius: 50%; /* Makes it round */
+}
+
+/* Style for the custom radio button indicator when selected */
+.custom-radio:checked + .custom-radio-label::before {
+    background-color: limegreen; /* Color when selected */
 }
