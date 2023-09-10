@@ -43,6 +43,63 @@ class QuestionModelTests(TestCase):
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
+    def test_is_published_with_future_pub_date(self):
+        """
+        is_published() should return False for a question with a future pub date.
+        """
+        future_pub_date = timezone.now() + datetime.timedelta(days=7)
+        future_question = Question(pub_date=future_pub_date)
+        self.assertIs(future_question.is_published(), False)
+
+    def test_is_published_with_default_pub_date(self):
+        """
+        is_published() should return True for a question with the default pub date (now).
+        """
+        current_pub_date = timezone.now()
+        current_question = Question(pub_date=current_pub_date)
+        self.assertIs(current_question.is_published(), True)
+
+    def test_is_published_with_past_pub_date(self):
+        """
+        is_published() should return True for a question with a pub date in the past.
+        """
+        past_pub_date = timezone.now() - datetime.timedelta(days=7)
+        past_question = Question(pub_date=past_pub_date)
+        self.assertIs(past_question.is_published(), True)
+
+    def test_can_vote_future_question(self):
+        """
+        can_vote() should return True for a question with a future end_date.
+        """
+        future_end_date = timezone.now() + datetime.timedelta(days=5)
+        future_question = Question(end_date=future_end_date)
+        self.assertIs(future_question.can_vote(), True)
+
+    def test_can_vote_past_question(self):
+        """
+        can_vote() should return False for a question with a past end_date.
+        """
+        past_end_date = timezone.now() - datetime.timedelta(days=5)
+        past_question = Question(end_date=past_end_date)
+        self.assertIs(past_question.can_vote(), False)
+
+    def test_can_vote_current_question(self):
+        """
+        can_vote() should return True for a question with a current end_date.
+        """
+        current_end_date = timezone.now() + datetime.timedelta(days=2)
+        current_question = Question(end_date=current_end_date)
+        self.assertIs(current_question.can_vote(), True)
+
+    def test_can_vote_question_ends_today(self):
+        """
+        can_vote() should return True for a question with an end_date set to today.
+        """
+        end_date_today = timezone.now()
+        question = Question(end_date=end_date_today + datetime.timedelta(days=1))
+        self.assertIs(question.can_vote(), True)
+
+
 class QuestionIndexViewTests(TestCase):
     def test_no_questions(self):
         """
