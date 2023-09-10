@@ -6,17 +6,43 @@ from django.utils import timezone
 
 class Question(models.Model):
     """
-    Question model with date published
+    Question model with date published and date expired
     """
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now)
+    end_date = models.DateTimeField('date expired', default=timezone.now() + timezone.timedelta(days=7),
+                                    null=True, blank=True)
 
     def __str__(self):
+        """
+        Displaying question in text form.
+        """
         return self.question_text
 
     def was_published_recently(self):
+        """
+        Checks if the question was published recently.
+        """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    def is_published(self):
+        """
+        Check if the question is published already or not.
+        :return: Bool
+        """
+        if not self.pub_date:
+            return False
+        return timezone.localtime(timezone.now()) >= timezone.localtime(self.pub_date)
+
+    def can_vote(self):
+        """
+        Check whether the question is still running or not.
+        :return: Bool
+        """
+        if self.pub_date <= timezone.now() <= self.end_date:
+            return True
+        return False
 
 
 class Choice(models.Model):
@@ -28,4 +54,7 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
 
     def __str__(self):
+        """
+        Displaying choices for the question.
+        """
         return self.choice_text

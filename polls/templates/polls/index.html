@@ -1,12 +1,25 @@
 {% load static %}
-
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<head>
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<div class="headbox">
+    <h1>KU Polls</h1>
+</div>
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        <li>
+            <a href="{% url 'polls:detail' question.id %}" {% if not question.can_vote %} onclick="showAlert()" {% endif %} ><button class="questionbutton">{{ question.question_text }}</button></a>
+            <br>
+            <a href="{% url 'polls:results' question.id %}"><button class="resultbutton">Results</button></a>
+        </li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+<script>
+    function showAlert() {
+        alert("This poll is closed.");
+    }
+</script>
