@@ -4,12 +4,19 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import Choice, Question, Vote
 
-from .models import Choice, Question
 
-
+@login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    if not request.user.is_authenticated:
+        #user must login
+        return redirect("login")
+    if not question.can_vote():
+        messages.error(request, "Not available to vote")
+        return redirect("polls:index")
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
@@ -18,13 +25,22 @@ def vote(request, question_id):
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    this_user = request.user
+    #selected_choice.votes += 1
+    #selected_choice.save()
+    try:
+        #find a vote for this user and this question.
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        #update his vote
+        vote.choice = selected_choice
+    except Vote.DoesNotExist:
+        #no matching vote - create new Vote
+        vote = Vote(user=this_user, choice=selected_choice)
+
+    vote.save()
+    #do: Use messages to display a confirmation on the results page.
+
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
 class IndexView(generic.ListView):
