@@ -26,8 +26,6 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     this_user = request.user
-    #selected_choice.votes += 1
-    #selected_choice.save()
     try:
         #find a vote for this user and this question.
         vote = Vote.objects.get(user=this_user, choice__question=question)
@@ -38,10 +36,8 @@ def vote(request, question_id):
         vote = Vote(user=this_user, choice=selected_choice)
 
     vote.save()
-    #do: Use messages to display a confirmation on the results page.
-
+    messages.success(request, "Your vote has been recorded")
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
 
 class IndexView(generic.ListView):
     """
@@ -71,6 +67,17 @@ class DetailView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        question = self.get_object()
+        user = self.request.user
+        try:
+            vote = Vote.objects.get(user=user, choice__question=question)
+            context['user_vote'] = vote.choice.id  # Pass the ID of the user's vote to the template
+        except Vote.DoesNotExist:
+            context['user_vote'] = None  # User hasn't voted for this question
+        return context
+
     def get(self, request, *args, **kwargs):
         """
         This will redirect to home page when,
@@ -85,6 +92,8 @@ class DetailView(generic.DetailView):
         if not question.can_vote():
             messages.error(request, "This vote is closed.")
             return redirect("polls:index")
+        if not request.user.is_authenticated:
+            return redirect("login")
         return super().get(request, *args, **kwargs)
 
 
