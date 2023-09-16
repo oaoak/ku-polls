@@ -40,11 +40,14 @@ class DetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         question = self.get_object()
         user = self.request.user
-        try:
-            vote = Vote.objects.get(user=user, choice__question=question)
-            context['user_vote'] = vote.choice.id  # Pass the ID of the user's vote to the template
-        except Vote.DoesNotExist:
-            context['user_vote'] = None  # User hasn't voted for this question
+        if user.is_authenticated:
+            try:
+                vote = Vote.objects.get(user=user, choice__question=question)
+                context['user_vote'] = vote.choice.id
+            except Vote.DoesNotExist:
+                context['user_vote'] = None
+        else:
+            context['user_vote'] = None
         return context
 
     def get(self, request, *args, **kwargs):
@@ -73,8 +76,14 @@ class ResultsView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_vote = Vote.objects.get(user=self.request.user, choice__question=self.get_object())
-        context['user_vote'] = user_vote
+        if self.request.user.is_authenticated:
+            try:
+                user_vote = Vote.objects.get(user=self.request.user, choice__question=self.get_object())
+                context['user_vote'] = user_vote
+            except Vote.DoesNotExist:
+                context['user_vote'] = None
+        else:
+            context['user_vote'] = None
         return context
 
 
