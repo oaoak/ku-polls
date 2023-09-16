@@ -190,3 +190,53 @@ button#home-button:hover {
     justify-content: center;
     align-items: center;
 }
+.logbutton {
+    border: medium;
+    color: darkgreen;
+    background-color: white;
+    border-radius: 30px;
+    font-family: Palatino, URW Palladio L, serif;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 6px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.logbutton:hover {
+    background-color: black;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.messagestyle {
+    font-family: Palatino, URW Palladio L, serif;
+    font-size: 20px;
+    color: white;
+}
+.logbutton2 {
+    border: medium;
+    color: white;
+    background-color: darkgreen;
+    border-radius: 30px;
+    font-family: Palatino, URW Palladio L, serif;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 6px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.logbutton2:hover {
+    background-color: mediumseagreen;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.messagestyle2 {
+    font-family: Palatino, URW Palladio L, serif;
+    font-size: 20px;
+    color: black;
+}
