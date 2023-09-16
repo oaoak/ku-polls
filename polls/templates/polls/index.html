@@ -3,6 +3,11 @@
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 </head>
 <div class="headbox">
+    {% if user.is_authenticated %}
+        <p class="messagestyle"><a href="{% url 'logout' %}"><button class="logbutton">Logout</button></a> Welcome, {{user.username.title}}</p>
+    {% else %}
+        <a href="{% url 'login' %}"><button class="logbutton">Login</button></a>
+    {% endif %}
     <h1>KU Polls</h1>
 </div>
 {% if latest_question_list %}

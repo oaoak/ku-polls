@@ -4,27 +4,8 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
-
-from .models import Choice, Question
-
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+from django.contrib.auth.decorators import login_required
+from .models import Choice, Question, Vote
 
 
 class IndexView(generic.ListView):
@@ -55,6 +36,20 @@ class DetailView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        question = self.get_object()
+        user = self.request.user
+        if user.is_authenticated:
+            try:
+                vote = Vote.objects.get(user=user, choice__question=question)
+                context['user_vote'] = vote.choice.id
+            except Vote.DoesNotExist:
+                context['user_vote'] = None
+        else:
+            context['user_vote'] = None
+        return context
+
     def get(self, request, *args, **kwargs):
         """
         This will redirect to home page when,
@@ -78,3 +73,47 @@ class ResultsView(generic.DetailView):
     """
     model = Question
     template_name = 'polls/results.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            try:
+                user_vote = Vote.objects.get(user=self.request.user, choice__question=self.get_object())
+                context['user_vote'] = user_vote
+            except Vote.DoesNotExist:
+                context['user_vote'] = None
+        else:
+            context['user_vote'] = None
+        return context
+
+
+@login_required
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if not request.user.is_authenticated:
+        # user must login
+        return redirect("login")
+    if not question.can_vote():
+        messages.error(request, "Not available to vote")
+        return redirect("polls:index")
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+        })
+    this_user = request.user
+    try:
+        # find a vote for this user and this question.
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        # update his vote
+        vote.choice = selected_choice
+    except Vote.DoesNotExist:
+        # no matching vote - create new Vote
+        vote = Vote(user=this_user, choice=selected_choice)
+
+    vote.save()
+    messages.success(request, "Your vote has been recorded")
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
