@@ -147,7 +147,7 @@ button#home-button:hover {
     font-size: 30px;
 }
 .custom-radio {
-    display: none; /* Hide the default radio button */
+    display: none;
 }
 
 /* Style for custom radio button container */
@@ -173,4 +173,20 @@ button#home-button:hover {
 /* Style for the custom radio button indicator when selected */
 .custom-radio:checked + .custom-radio-label::before {
     background-color: limegreen; /* Color when selected */
+}
+.votedmsg {
+    border: medium;
+    color: white;
+    background-color: limegreen;
+    font-family: Palatino, URW Palladio L, serif;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    font-size: 25px;
+    margin: 6px 2px;
+    transition-duration: 0.4s;
+    cursor: auto;
+    justify-content: center;
+    align-items: center;
 }
