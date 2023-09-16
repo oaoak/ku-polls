@@ -2,6 +2,13 @@
 <head>
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 </head>
+<div>
+    {% if user.is_authenticated %}
+        <p class="messagestyle2"><a href="{% url 'logout' %}"><button class="logbutton2">Logout</button></a> {{user.username.title}}</p>
+    {% else %}
+        <a href="{% url 'login' %}"><button class="logbutton2">Login</button></a>
+    {% endif %}
+</div>
 <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
     <fieldset>

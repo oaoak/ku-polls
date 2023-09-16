@@ -4,9 +4,9 @@
 </head>
 <div class="headbox">
     {% if user.is_authenticated %}
-        <p>Welcome back, {{user.username.title}} <a href="{% url 'logout' %}">Logout</a></p>
+        <p class="messagestyle"><a href="{% url 'logout' %}"><button class="logbutton">Logout</button></a> Welcome, {{user.username.title}}</p>
     {% else %}
-        Please <a href="{% url 'login' %}">Login</a> to vote
+        <a href="{% url 'login' %}"><button class="logbutton">Login</button></a>
     {% endif %}
     <h1>KU Polls</h1>
 </div>
