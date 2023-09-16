@@ -3,8 +3,9 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.models import User
+from .models import Question, Choice, Vote
 
-from .models import Question
 
 def create_question(question_text, days):
     """
@@ -14,6 +15,8 @@ def create_question(question_text, days):
     """
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(question_text=question_text, pub_date=time)
+
+
 class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_future_question(self):
@@ -157,6 +160,7 @@ class QuestionIndexViewTests(TestCase):
             [question2, question1],
         )
 
+
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
         """
@@ -177,3 +181,30 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class VoteAuthenticationTests(TestCase):
+    def setUp(self):
+        """
+        Set up the necessary data for the test cases.
+        """
+        self.test_user = User.objects.create_user(username='testuser', password='testpassword')
+        self.question = create_question("Test question", days=-1)
+        self.choice = Choice.objects.create(choice_text="Choice 1", question=self.question)
+
+    def test_authenticated_user_can_vote(self):
+        """
+        Test that an authenticated user can successfully vote on a question.
+        """
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.post(reverse('polls:vote', args=(self.question.id,)), {'choice': self.choice.id})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('polls:results', args=(self.question.id,)))
+
+    def test_unauthenticated_user_redirected_to_login(self):
+        """
+        Test that an unauthenticated user is redirected to the login page when attempting to vote.
+        """
+        response = self.client.post(reverse('polls:vote', args=(self.question.id,)), {'choice': self.choice.id})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login') + f'?next={reverse("polls:vote", args=(self.question.id,))}')
