@@ -43,6 +43,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Vision Statement](../../wiki/Vision%20Statement)
 - [Requirements](../../wiki/Requirements)
 - [Project Development Plan](../../wiki/Project-Development-Plan)
+- [Domain Model](../../wiki/Domain-Model)
 - [Iteration 1 Plan](../../wiki/Iteration-1-Plan) and [Board](https://github.com/users/oaoak/projects/1/views/1?layout=board)
 - [Iteration 2 Plan](../../wiki/Iteration-2-Plan) and [Board](https://github.com/users/oaoak/projects/1/views/7)
 - [Iteration 3 Plan](../../wiki/Iteration-3-Plan) and [Board](https://github.com/users/oaoak/projects/1/views/9?filterQuery=iteration%3A%22Iteration+3%22)
