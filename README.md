@@ -10,7 +10,31 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## Install and Run
 
-to be added.
+Clone this repository to your local machine.
+
+```
+git clone https://github.com/oaoak/ku-polls.git your_directory_name
+```
+
+Change your directory if you are not on it.
+
+```
+cd your_directory_name
+```
+
+Run the ku-polls.
+
+```
+python manage.py runserver
+```
+
+## User Demos
+
+| Username  | Password        |
+|-----------|-----------------|
+|   Salmon   | Sillysalmon123 |
+|   Spacedog   | Barkbark99 |
+|   Kitty  |  Boba5555  |
 
 ## Project Documents
 
