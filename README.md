@@ -12,6 +12,14 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 to be added.
 
+## User Demos
+
+| Username  | Password        |
+|-----------|-----------------|
+|   Salmon   | Sillysalmon123 |
+|   Spacedog   | Barkbark99 |
+|   Kitty  |  Boba5555  |
+
 ## Project Documents
 
 All project documents are in the [Project Wiki](../../wiki/Home).
