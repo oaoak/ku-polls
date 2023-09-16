@@ -8,37 +8,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Choice, Question, Vote
 
 
-@login_required
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    if not request.user.is_authenticated:
-        #user must login
-        return redirect("login")
-    if not question.can_vote():
-        messages.error(request, "Not available to vote")
-        return redirect("polls:index")
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    this_user = request.user
-    try:
-        #find a vote for this user and this question.
-        vote = Vote.objects.get(user=this_user, choice__question=question)
-        #update his vote
-        vote.choice = selected_choice
-    except Vote.DoesNotExist:
-        #no matching vote - create new Vote
-        vote = Vote(user=this_user, choice=selected_choice)
-
-    vote.save()
-    messages.success(request, "Your vote has been recorded")
-    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
 class IndexView(generic.ListView):
     """
     View for index page.
@@ -92,8 +61,6 @@ class DetailView(generic.DetailView):
         if not question.can_vote():
             messages.error(request, "This vote is closed.")
             return redirect("polls:index")
-        if not request.user.is_authenticated:
-            return redirect("login")
         return super().get(request, *args, **kwargs)
 
 
@@ -103,3 +70,41 @@ class ResultsView(generic.DetailView):
     """
     model = Question
     template_name = 'polls/results.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_vote = Vote.objects.get(user=self.request.user, choice__question=self.get_object())
+        context['user_vote'] = user_vote
+        return context
+
+
+@login_required
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if not request.user.is_authenticated:
+        # user must login
+        return redirect("login")
+    if not question.can_vote():
+        messages.error(request, "Not available to vote")
+        return redirect("polls:index")
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+        })
+    this_user = request.user
+    try:
+        # find a vote for this user and this question.
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        # update his vote
+        vote.choice = selected_choice
+    except Vote.DoesNotExist:
+        # no matching vote - create new Vote
+        vote = Vote(user=this_user, choice=selected_choice)
+
+    vote.save()
+    messages.success(request, "Your vote has been recorded")
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
