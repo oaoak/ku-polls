@@ -10,25 +10,21 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## Install and Run
 
-Clone this repository to your local machine.
+- Make sure to proceed the [installation](https://github.com/oaoak/ku-polls/blob/iteration4/Installation.md) before running the application.
 
-```
-git clone https://github.com/oaoak/ku-polls.git your_directory_name
-```
-
-Change your directory if you are not on it.
-
-```
-cd your_directory_name
-```
-
-Run the ku-polls.
+- Then run the application using.
 
 ```
 python manage.py runserver
 ```
 
-## User Demos
+## Admin Demo
+
+| Username  | Password        |
+|-----------|-----------------|
+|   authy1  |   Thisisadmin1    |
+
+## User Demo
 
 | Username  | Password        |
 |-----------|-----------------|
