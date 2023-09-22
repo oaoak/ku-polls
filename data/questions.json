@@ -1,0 +1,38 @@
+[
+{
+  "model": "polls.question",
+  "pk": 1,
+  "fields": {
+    "question_text": "How can you handle your laziness?",
+    "pub_date": "2023-09-03T07:59:34Z",
+    "end_date": "2023-09-27T16:53:13Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "question_text": "Do you think that Django is hard?",
+    "pub_date": "2023-09-03T10:13:42Z",
+    "end_date": "2023-09-27T16:53:13Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 3,
+  "fields": {
+    "question_text": "How much do you think a recently graduated programmer should be paid?",
+    "pub_date": "2023-09-03T10:31:19Z",
+    "end_date": "2023-09-27T13:32:29Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 4,
+  "fields": {
+    "question_text": "Testing closed poll",
+    "pub_date": "2023-09-16T09:17:15Z",
+    "end_date": "2023-09-17T09:02:27Z"
+  }
+}
+]
