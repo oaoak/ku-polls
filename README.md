@@ -10,7 +10,7 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## Install and Run
 
-# Make sure to [Install](https://github.com/oaoak/ku-polls/blob/iteration4/Installation.md) before running the application
+**Make sure to proceed the [installation](https://github.com/oaoak/ku-polls/blob/iteration4/Installation.md) before running the application**
 
 Run the ku-polls.
 
