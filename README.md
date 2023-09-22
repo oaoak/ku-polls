@@ -28,6 +28,12 @@ Run the ku-polls.
 python manage.py runserver
 ```
 
+## Admin Demos
+
+| Username  | Password        |
+|-----------|-----------------|
+|   authy1  |   Thisisadmin1    |
+
 ## User Demos
 
 | Username  | Password        |
