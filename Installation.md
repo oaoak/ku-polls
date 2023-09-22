@@ -23,12 +23,6 @@ cd your_directory_name
 python -m venv env
 ```
 
-- Run virtual environment.
-
-```
-. env/bin/activate
-```
-
 - Install packages from requirements.txt
 
 ```
