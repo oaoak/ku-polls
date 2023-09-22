@@ -1,21 +1,6 @@
 # Installation steps
 
-## 1. Cloning
-
-- Clone this repository to your local machine.
-
-```
-git clone https://github.com/oaoak/ku-polls.git your_directory_name
-```
-**NOTED**: ***your_directory_name*** in the field is ***your*** desired directory name.
-
-- Change your directory if you are not on it.
-
-```
-cd your_directory_name
-```
-
-## 2. Create virtual environment and install packages
+## 1. Create virtual environment and install packages
 
 - Create virtual environment.
 
@@ -29,7 +14,7 @@ python -m venv env
 pip install -r requirements.txt
 ```
 
-## 3. Run migration
+## 2. Run migration
 
 - Run the migration.
 
@@ -37,7 +22,7 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-## 4. Run tests
+## 3. Run tests
 
 - Checking tests.
 
@@ -45,7 +30,7 @@ python manage.py migrate
 python manage.py test
 ```
 
-## 5. Install data from the data fixtures
+## 4. Install data from the data fixtures
 
 - Load questions data.
 
