@@ -35,7 +35,7 @@ python -m venv env
 pip install -r requirements.txt
 ```
 
-## Run migration
+## 3. Run migration
 
 - Run the migration.
 
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-## Run tests
+## 4. Run tests
 
 - Checking tests.
 
@@ -51,7 +51,7 @@ python manage.py migrate
 python manage.py test
 ```
 
-## Install data from the data fixtures
+## 5. Install data from the data fixtures
 
 - Load questions data.
 
