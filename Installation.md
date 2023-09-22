@@ -43,10 +43,30 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-## Run test
+## Run tests
 
 - Checking tests.
 
 ```
 python manage.py test
+```
+
+## Install data from the data fixtures
+
+- Load questions data.
+
+```
+python manage.py loaddata data/questions.json
+```
+
+- Load choices data.
+
+```
+python manage.py loaddata data/choices.json
+```
+
+- Load users data.
+
+```
+python manage.py loaddata data/users.json
 ```
