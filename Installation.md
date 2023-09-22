@@ -7,7 +7,7 @@
 ```
 git clone https://github.com/oaoak/ku-polls.git your_directory_name
 ```
-**NOTED**: ***your_directory_name*** is the field is ***your*** desired directory name.
+**NOTED**: ***your_directory_name*** in the field is ***your*** desired directory name.
 
 - Change your directory if you are not on it.
 
