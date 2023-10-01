@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
@@ -38,7 +38,10 @@ class DetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        question = self.get_object()
+        try:
+            question = self.get_object()
+        except Http404:
+            return redirect("polls:index")
         user = self.request.user
         if user.is_authenticated:
             try:
@@ -56,7 +59,10 @@ class DetailView(generic.DetailView):
         1. Question is not published.
         2. Vote is closed.
         """
-        question = self.get_object()
+        try:
+            question = self.get_object()
+        except Http404:
+            return redirect("polls:index")
         if not question.is_published():
             # Use the Messages Framework to set the error message
             messages.error(request, "Question is not published yet.")
