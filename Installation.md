@@ -23,6 +23,12 @@ cd your_directory_name
 python -m venv env
 ```
 
+- Change to your newly created virtual environment.
+
+```
+. env/bin/activate
+```
+
 - Install packages from requirements.txt
 
 ```

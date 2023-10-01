@@ -12,19 +12,19 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 - Make sure to proceed the [installation](https://github.com/oaoak/ku-polls/blob/iteration4/Installation.md) before running the application.
 
-- Then run the ku-polls.
+- Then run the application using.
 
 ```
 python manage.py runserver
 ```
 
-## Admin Demos
+## Admin Demo
 
 | Username  | Password        |
 |-----------|-----------------|
 |   authy1  |   Thisisadmin1    |
 
-## User Demos
+## User Demo
 
 | Username  | Password        |
 |-----------|-----------------|
