@@ -15,6 +15,6 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Requirements]
 - [Project Development Plan]
 - [Domain Model]
-- [Iteration 1 Plan]
+- [Iteration 1 Plan](https://github.com/oaoak/ku-polls/wiki/Iteration-1-Plan)
 
 More about [Django](https://www.w3schools.com/django/)
