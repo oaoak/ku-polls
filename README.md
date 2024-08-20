@@ -6,3 +6,15 @@ additional features.
 
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at Kasetsart University.
+
+## Project Documents
+
+All project documents are in the [Project Wiki](../../wiki/Home).
+
+- [Vision Statement]
+- [Requirements]
+- [Project Development Plan]
+- [Domain Model]
+- [Iteration 1 Plan]
+
+More about [Django](https://www.w3schools.com/django/)
