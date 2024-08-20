@@ -13,8 +13,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 
 - [Vision and Scope](https://github.com/oaoak/ku-polls/wiki/Vision-and-Scope)
 - [Requirements](https://github.com/oaoak/ku-polls/wiki/Requirements)
-- [Project Development Plan]
-- [Domain Model]
+- [Project Plan](https://github.com/oaoak/ku-polls/wiki/Project-Plan)
 - [Iteration 1 Plan](https://github.com/oaoak/ku-polls/wiki/Iteration-1-Plan)
 
 More about [Django](https://www.w3schools.com/django/)
