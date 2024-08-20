@@ -11,8 +11,8 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 All project documents are in the [Project Wiki](../../wiki/Home).
 
-- [Vision Statement]
-- [Requirements]
+- [Vision and Scope](https://github.com/oaoak/ku-polls/wiki/Vision-and-Scope)
+- [Requirements](https://github.com/oaoak/ku-polls/wiki/Requirements)
 - [Project Development Plan]
 - [Domain Model]
 - [Iteration 1 Plan](https://github.com/oaoak/ku-polls/wiki/Iteration-1-Plan)
