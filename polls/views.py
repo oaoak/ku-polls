@@ -1,3 +1,4 @@
+"""Views for index, detail, and result pages."""
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse

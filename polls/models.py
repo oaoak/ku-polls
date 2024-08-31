@@ -1,3 +1,4 @@
+"""Question and Choice model for app."""
 from django.db import models
 from django.utils import timezone
 
