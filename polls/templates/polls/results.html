@@ -1,9 +1,26 @@
-<h1>{{ question.question_text }}</h1>
-
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'kupolls:detail' question.id %}">Vote again?</a>
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<h3>{{ question.question_text }}</h3>
+<div>
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>Choice</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for choice in question.choice_set.all %}
+            <tr>
+                <td>{{ choice.choice_text }}</td>
+                <td>{{ choice.votes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="{% url 'kupolls:index' %}"><button>Home page</button></a>
+</div>

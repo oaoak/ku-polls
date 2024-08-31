@@ -1,7 +1,68 @@
+body {
+    background: white url("images/background.png") no-repeat;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.results-table th, .results-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.results-table th {
+    background-color: dodgerblue;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
 li a {
+    color: white;
+    text-decoration: none;
+}
+
+button, .button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: dodgerblue;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: cyan;
+    color: black;
+}
+
+.button:hover {
+    background-color: cyan;
+    color: black;
+}
+
+tr {
     color: white;
 }
 
-body {
-    background: white url("images/background.png") no-repeat;
+div {
+    color: white
+}
+
+h3 {
+    color: white;
+}
+
+ul {
+    color: white;
 }
