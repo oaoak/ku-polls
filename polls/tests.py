@@ -36,6 +36,73 @@ class QuestionModelTests(TestCase):
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
+    def test_is_published_with_future_pub_date(self):
+        """
+        is_published() returns False for questions with a pub_date in the future.
+        """
+        future_pub_date = timezone.localtime(timezone.now() + datetime.timedelta(days=5))
+        future_question = Question(pub_date=future_pub_date)
+        self.assertFalse(future_question.is_published())
+
+    def test_is_published_with_now_pub_date(self):
+        """
+        is_published() returns True for questions with the pub_date set to now.
+        """
+        now_pub_date = timezone.localtime(timezone.now())
+        now_question = Question(pub_date=now_pub_date)
+        self.assertTrue(now_question.is_published())
+
+    def test_is_published_with_past_pub_date(self):
+        """
+        is_published() returns True for questions with a pub_date in the past.
+        """
+        past_pub_date = timezone.localtime(timezone.now() - datetime.timedelta(days=5))
+        past_question = Question(pub_date=past_pub_date)
+        self.assertTrue(past_question.is_published())
+
+    def test_can_vote_with_no_end_date(self):
+        """
+        can_vote() returns True if the end_date is None and pub_date is in the past.
+        """
+        past_pub_date = timezone.localtime(timezone.now() - datetime.timedelta(days=5))
+        no_end_date_question = Question(pub_date=past_pub_date, end_date=None)
+        self.assertTrue(no_end_date_question.can_vote())
+
+    def test_can_vote_with_past_end_date(self):
+        """
+        can_vote() returns False if the end_date is in the past.
+        """
+        past_pub_date = timezone.localtime(timezone.now() - datetime.timedelta(days=5))
+        past_end_date_question = Question(
+            pub_date=past_pub_date,
+            end_date=timezone.localtime(timezone.now() - datetime.timedelta(days=1))
+        )
+        self.assertFalse(past_end_date_question.can_vote())
+
+    def test_can_vote_with_current_end_date(self):
+        """
+        can_vote() returns True if the current date is within the pub_date and end_date range.
+        """
+        past_pub_date = timezone.localtime(timezone.now() - datetime.timedelta(days=5))
+        future_end_date = timezone.localtime(timezone.now() + datetime.timedelta(days=5))
+        current_end_date_question = Question(
+            pub_date=past_pub_date,
+            end_date=future_end_date
+        )
+        self.assertTrue(current_end_date_question.can_vote())
+
+    def test_can_vote_with_future_end_date(self):
+        """
+        can_vote() returns True if the end_date is in the future and pub_date is in the past.
+        """
+        past_pub_date = timezone.localtime(timezone.now() - datetime.timedelta(days=5))
+        future_end_date = timezone.localtime(timezone.now() + datetime.timedelta(days=10))
+        future_end_date_question = Question(
+            pub_date=past_pub_date,
+            end_date=future_end_date
+        )
+        self.assertTrue(future_end_date_question.can_vote())
+
 def create_question(question_text, days):
     """
     Create a question with the given `question_text` and published the
@@ -112,7 +179,7 @@ class QuestionDetailViewTests(TestCase):
         future_question = create_question(question_text='Future question.', days=5)
         url = reverse('kupolls:detail', args=(future_question.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertRedirects(response, reverse('kupolls:index'))
 
     def test_past_question(self):
         """
