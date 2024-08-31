@@ -16,7 +16,16 @@
         <li>
             <a href="{% url 'kupolls:detail' question.id %}"><button>{{ question.question_text }}</button></a>
             <br>
-            <a href="{% url 'kupolls:results' question.id %}"><button class="resultbutton">Results</button></a>
+            <a href="{% url 'kupolls:results' question.id %}"><button>Results</button></a>
+            {% if question.can_vote %}
+                <button style="background: lime; color: black">
+                    OPEN
+                </button>
+            {% else %}
+                <button style="background: red; color: black">
+                    CLOSED
+                </button>
+            {% endif %}
         </li>
     {% endfor %}
     </ul>
