@@ -1,3 +1,5 @@
+[![Unit tests](https://github.com/oaoak/ku-polls/actions/workflows/ku-polls-test.yml/badge.svg)](https://github.com/oaoak/ku-polls/actions/workflows/ku-polls-test.yml)
+
 ## KU Polls: Online Survey Questions 
 
 An application to conduct online polls and surveys based
