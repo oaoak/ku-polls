@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 
-from .models import Question
+from .models import Question, User, Choice, Vote
 
 
 class QuestionModelTests(TestCase):
@@ -190,3 +190,55 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('kupolls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class VoteModelTests(TestCase):
+    def setUp(self):
+        """
+        Set up a test user, question, and choices.
+        """
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.question = Question.objects.create(
+            question_text="What's your favorite color?",
+            pub_date=timezone.now(),
+            end_date=timezone.now() + timezone.timedelta(days=7)
+        )
+        self.choice1 = Choice.objects.create(question=self.question, choice_text="Blue")
+        self.choice2 = Choice.objects.create(question=self.question, choice_text="Red")
+
+    def test_vote_creation(self):
+        """
+        Test that a new vote can be created.
+        """
+        self.client.login(username='testuser', password='12345')
+        vote = Vote.objects.create(user=self.user, choice=self.choice1)
+        self.assertEqual(Vote.objects.count(), 1)
+        self.assertEqual(vote.choice, self.choice1)
+        self.assertEqual(vote.user, self.user)
+
+    def test_vote_update(self):
+        """
+        Test that a vote can be updated by the user.
+        """
+        self.client.login(username='testuser', password='12345')
+        Vote.objects.create(user=self.user, choice=self.choice1)
+        vote = Vote.objects.get(user=self.user, choice=self.choice1)
+        vote.choice = self.choice2
+        vote.save()
+        self.assertEqual(Vote.objects.count(), 1)
+        self.assertEqual(vote.choice, self.choice2)
+
+    def test_vote_count(self):
+        """
+        Test that the Choice.votes property correctly counts votes.
+        """
+        self.client.login(username='testuser', password='12345')
+        Vote.objects.create(user=self.user, choice=self.choice1)
+        self.assertEqual(self.choice1.votes, 1)
+        self.assertEqual(self.choice2.votes, 0)
+        vote = Vote.objects.get(user=self.user, choice=self.choice1)
+        vote.choice = self.choice2
+        vote.save()
+        self.assertEqual(self.choice1.votes, 0)
+        self.assertEqual(self.choice2.votes, 1)
+

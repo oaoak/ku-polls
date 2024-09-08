@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
-from .models import Choice, Question
+from django.contrib.auth.decorators import login_required
+from .models import Choice, Question, Vote
 
 class IndexView(generic.ListView):
     """
@@ -45,7 +46,21 @@ class DetailView(generic.DetailView):
         if not question.can_vote():
             messages.error(self.request, f"Poll number {question.id} is not available to vote.")
             return redirect("kupolls:index")
-        return render(request, self.template_name, {"question": question})
+
+        user_vote = None
+        if request.user.is_authenticated:
+            try:
+                previous_vote = Vote.objects.get(user=request.user, choice__question=question)
+                user_vote = previous_vote.choice.id
+            except Vote.DoesNotExist:
+                user_vote = None
+
+        return render(request, self.template_name, {
+            'question': question,
+            'user_vote': user_vote,
+            'error_message': self.request.GET.get('error_message')
+        })
+
 
 class ResultsView(generic.DetailView):
     """
@@ -69,7 +84,11 @@ class ResultsView(generic.DetailView):
             return redirect("kupolls:index")
         return render(request, self.template_name, {"question": question})
 
+@login_required
 def vote(request, question_id):
+    """
+    Vote for one of the answers to a question.
+    """
     question = get_object_or_404(Question, pk=question_id)
 
     if not question.can_vote():
@@ -77,6 +96,15 @@ def vote(request, question_id):
         return render(request, 'kupolls/detail.html', {
             'question': question,
             'error_message': "Voting is not allowed for this question.",
+        })
+
+    choice_id = request.POST.get('choice')
+
+    if choice_id is None:
+        # If no choice is selected, redisplay the question voting form with an error message.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
         })
 
     try:
@@ -87,10 +115,17 @@ def vote(request, question_id):
             'question': question,
             'error_message': "You didn't select a choice.",
         })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('kupolls:results', args=(question.id,)))
+
+    this_user = request.user
+    try:
+        # find a vote for this user and this question.
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        # update his vote
+        vote.choice = selected_choice
+    except Vote.DoesNotExist:
+        # no matching vote - create new Vote
+        vote = Vote.objects.create(user=this_user, choice=selected_choice)
+
+    vote.save()
+    messages.success(request, "Your vote has been recorded")
+    return HttpResponseRedirect(reverse('kupolls:results', args=(question.id,)))
