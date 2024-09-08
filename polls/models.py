@@ -1,6 +1,7 @@
 """Question and Choice model for app."""
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 DEFAULT_END_DATE = 7
 RECENTLY_PUBLISHED_DAYS = 1
@@ -67,10 +68,28 @@ class Choice(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    #votes = models.IntegerField(default=0)
+
+    @property
+    def votes(self):
+        """return a vote for this choice."""
+        return Vote.objects.filter(choice=self).count()
 
     def __str__(self):
         """
         Choice as string.
         """
         return self.choice_text
+
+
+class Vote(models.Model):
+    """A vote by a user for a"""
+
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """
+        Vote as string to show which user votes for which choice.
+        """
+        return f'{self.user} voted for {self.choice}'
