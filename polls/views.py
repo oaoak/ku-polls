@@ -46,7 +46,21 @@ class DetailView(generic.DetailView):
         if not question.can_vote():
             messages.error(self.request, f"Poll number {question.id} is not available to vote.")
             return redirect("kupolls:index")
-        return render(request, self.template_name, {"question": question})
+
+        user_vote = None
+        if request.user.is_authenticated:
+            try:
+                previous_vote = Vote.objects.get(user=request.user, choice__question=question)
+                user_vote = previous_vote.choice.id
+            except Vote.DoesNotExist:
+                user_vote = None
+
+        return render(request, self.template_name, {
+            'question': question,
+            'user_vote': user_vote,
+            'error_message': self.request.GET.get('error_message')
+        })
+
 
 class ResultsView(generic.DetailView):
     """
@@ -82,6 +96,15 @@ def vote(request, question_id):
         return render(request, 'kupolls/detail.html', {
             'question': question,
             'error_message': "Voting is not allowed for this question.",
+        })
+
+    choice_id = request.POST.get('choice')
+
+    if choice_id is None:
+        # If no choice is selected, redisplay the question voting form with an error message.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
         })
 
     try:
