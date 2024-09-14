@@ -9,6 +9,30 @@ additional features.
 This app was created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at Kasetsart University.
 
+## Install and Run
+
+- Make sure to proceed the [installation](https://github.com/oaoak/ku-polls/blob/iteration4/Installation.md) before running the application.
+
+- Then run the application using.
+
+```
+python manage.py runserver
+```
+
+## Admin Demo
+
+| Username  | Password        |
+|-----------|-----------------|
+|   TestAdmin  |   Admin1111    |
+
+## User Demo
+
+| Username  | Password        |
+|-----------|-----------------|
+|   TestUser1   | User1111 |
+|   TestUser2   | User2222 |
+|   TestUser3  |  User3333  |
+
 ## Project Documents
 
 All project documents are in the [Project Wiki](../../wiki/Home).
