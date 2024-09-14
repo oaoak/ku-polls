@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY", default="django-insecure-rb*_dcs%jo0tj9(%8&6*b@7@!e&a!+6#gf_sb#14lt%$*758-x")
+SECRET_KEY = config("SECRET_KEY", cast=str, default="your-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True)
+DEBUG = config('DEBUG', cast=bool, default=False)
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="*").split(",")
 
 
 # Application definition
@@ -108,7 +108,7 @@ LOGOUT_REDIRECT_URL = 'login'       # after logout, return to login page
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = config("TIME_ZONE", default="Asia/Bangkok")
+TIME_ZONE = config("TIME_ZONE", default="UTC")
 
 USE_I18N = True
 
