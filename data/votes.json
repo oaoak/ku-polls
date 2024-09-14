@@ -1,0 +1,66 @@
+[
+{
+  "model": "polls.vote",
+  "pk": 1,
+  "fields": {
+    "choice": 9,
+    "user": 1
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 2,
+  "fields": {
+    "choice": 2,
+    "user": 1
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 3,
+  "fields": {
+    "choice": 9,
+    "user": 3
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 4,
+  "fields": {
+    "choice": 3,
+    "user": 3
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 5,
+  "fields": {
+    "choice": 8,
+    "user": 4
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 6,
+  "fields": {
+    "choice": 3,
+    "user": 4
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 7,
+  "fields": {
+    "choice": 24,
+    "user": 1
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 8,
+  "fields": {
+    "choice": 29,
+    "user": 1
+  }
+}
+]
