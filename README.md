@@ -1,4 +1,5 @@
 [![Unit tests](https://github.com/oaoak/ku-polls/actions/workflows/ku-polls-test.yml/badge.svg)](https://github.com/oaoak/ku-polls/actions/workflows/ku-polls-test.yml)
+[![codecov](https://codecov.io/gh/oaoak/ku-polls/graph/badge.svg?token=KOXWHGQ6QU)](https://codecov.io/gh/oaoak/ku-polls)
 
 ## KU Polls: Online Survey Questions 
 
