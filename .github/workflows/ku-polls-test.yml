@@ -25,7 +25,19 @@ jobs:
         python-version: "3.9"
     - name: Install Dependencies
       run: |
-        pip install -r requirements.txt  
-    - name: ku-polls test
+        pip install -r requirements.txt 
+        pip install pytest coverage
+    - name: Run tests with coverage
       run: |
-        python manage.py test
+        coverage run --branch manage.py test
+    - name: Generate Coverage Report
+      run: |
+        coverage report
+        coverage xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }} 
+        files: coverage.xml
+        flags: unittests
+        fail_ci_if_error: true
