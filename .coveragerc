@@ -1,0 +1,32 @@
+[run]
+# This section controls what is included or excluded from coverage collection
+
+# Exclude Python library files and add-ons (system-wide and user-wide)
+omit =
+    /usr/lib/*            # System-wide Python libraries
+    /usr/local/*          # Locally installed Python libraries
+    .local/*              # User-installed libraries
+    env/*                 # Your virtual environment directory
+
+# Exclude Django migration files
+    */migrations/*        # Django migration files
+
+# Exclude Django project configuration files
+    mysite/*              # Replace 'mysite' with the actual name of your Django project directory
+
+# Exclude the manage.py file
+    manage.py             # Django's main entry-point script
+
+# Exclude package initialization files
+    */__init__.py         # Package initialization files
+
+[report]
+# This section controls how coverage reports are generated
+
+# Ignore __str__ and __repr__ methods in the coverage report
+exclude_lines =
+    def __str__           # Ignore string representations
+    def __repr__          # Ignore object representations
+
+# You can add other patterns here to exclude additional methods or lines
+    pragma: no cover      # Lines marked with this comment will be excluded
